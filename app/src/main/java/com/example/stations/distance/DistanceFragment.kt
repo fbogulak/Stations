@@ -14,7 +14,10 @@ import com.example.stations.R
 import com.example.stations.databinding.FragmentDistanceBinding
 import com.example.stations.ui.base.BaseFragment
 import com.example.stations.utils.LoadingStatus
+import com.example.stations.utils.toLocalDateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.Duration
+import java.time.LocalDateTime
 
 class DistanceFragment : BaseFragment() {
 
@@ -25,18 +28,18 @@ class DistanceFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        setupBinding(inflater)
-        setupObservers()
-        setupMenu()
-
-        refreshData()
-        return binding.root
-    }
-
-    private fun setupBinding(inflater: LayoutInflater) {
         binding = FragmentDistanceBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupMenu()
+
+        setupStationsData()
     }
 
     private fun setupObservers() {
@@ -78,7 +81,11 @@ class DistanceFragment : BaseFragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.action_refresh -> {
-                        refreshData()
+                        if (hasNetworkConnection()) {
+                            viewModel.refreshData()
+                        } else {
+                            viewModel.setHasNoInternet()
+                        }
                         return true
                     }
                 }
@@ -87,11 +94,18 @@ class DistanceFragment : BaseFragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun refreshData() {
-        if (hasNetworkConnection()) {
-            viewModel.refreshData()
-        } else {
-            viewModel.setHasNoInternet()
+    private fun setupStationsData() {
+        val lastRefreshTime = viewModel.lastRefreshTime?.toLocalDateTime()
+        if (lastRefreshTime == null) {
+            showSnackBar(R.string.connection_required)
+        } else if (
+            Duration.between(lastRefreshTime, LocalDateTime.now()).toHours() >= 24
+        ) {
+            if (hasNetworkConnection()) {
+                viewModel.refreshData()
+            } else {
+                showSnackBar(R.string.time_to_refresh_please_connect)
+            }
         }
     }
 }

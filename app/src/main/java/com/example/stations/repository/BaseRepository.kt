@@ -8,4 +8,6 @@ interface BaseRepository {
     val stations: LiveData<List<Station>>
     val stationKeywords: LiveData<List<StationKeyword>>
     suspend fun refreshStationsData()
+    fun getLastRefreshTime(): String?
+    fun saveLastRefreshTime(lastRefreshTime: String)
 }

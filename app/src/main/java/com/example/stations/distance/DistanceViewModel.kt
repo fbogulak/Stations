@@ -11,6 +11,7 @@ class DistanceViewModel(private val repository: BaseRepository) : BaseViewModel(
 
     val stations = repository.stations
     val stationKeywords = repository.stationKeywords
+    val lastRefreshTime = repository.getLastRefreshTime()
 
     fun refreshData() {
         mutableStatus.value = LoadingStatus.LOADING

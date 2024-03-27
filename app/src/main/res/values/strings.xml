@@ -6,4 +6,6 @@
     <string name="uncommon_error">Wystąpił nietypowy błąd</string>
     <string name="error_offline">Brak połączenia z Internetem</string>
     <string name="refresh_stations">Odśwież stacje</string>
+    <string name="time_to_refresh_please_connect">Lista stacji może być nieaktualna. Aby odświeżyć należy połączyć się z internetem.</string>
+    <string name="connection_required">Aby pobrać listę stacji konieczne jest połączenie z internbetem.</string>
 </resources>
