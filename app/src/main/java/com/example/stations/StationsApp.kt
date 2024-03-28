@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.stations.constants.SHARED_PREFERENCE_NAME
 import com.example.stations.database.StationsDatabase
-import com.example.stations.distance.DistanceViewModel
 import com.example.stations.repository.BaseRepository
 import com.example.stations.repository.StationsRepository
+import com.example.stations.ui.distance.DistanceViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

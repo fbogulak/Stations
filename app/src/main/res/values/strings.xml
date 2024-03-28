@@ -8,4 +8,6 @@
     <string name="refresh_stations">Odśwież stacje</string>
     <string name="time_to_refresh_please_connect">Lista stacji może być nieaktualna. Aby odświeżyć należy połączyć się z internetem.</string>
     <string name="connection_required">Aby pobrać listę stacji konieczne jest połączenie z internbetem.</string>
+    <string name="from_station_hint">Stacja początkowa</string>
+    <string name="to_station_hint">Stacja końcowa</string>
 </resources>

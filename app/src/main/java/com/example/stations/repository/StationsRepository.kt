@@ -1,10 +1,10 @@
 package com.example.stations.repository
 
 import android.content.SharedPreferences
-import androidx.lifecycle.map
 import com.example.stations.constants.SAVED_LAST_REFRESH_TIME_KEY
 import com.example.stations.database.StationsDatabase
 import com.example.stations.database.asDomainModel
+import com.example.stations.domain.models.Station
 import com.example.stations.network.StationsApi
 import com.example.stations.network.models.asDatabaseModel
 import com.example.stations.utils.toIsoString
@@ -16,9 +16,15 @@ class StationsRepository(
     private val database: StationsDatabase,
     private val sharedPref: SharedPreferences,
 ) : BaseRepository {
-    override val stations = database.stationDao.getStations().map { it.asDomainModel() }
-    override val stationKeywords =
-        database.stationKeywordDao.getStationKeywords().map { it.asDomainModel() }
+
+    override suspend fun getStations(query: String?): List<Station> =
+        if (query.isNullOrEmpty()) {
+            database.stationDao.getStations().asDomainModel()
+        } else {
+            val expression = "%${query.trim()}%"
+            database.stationDao.getFilteredStations(expression).asDomainModel()
+        }
+
 
     override suspend fun refreshStationsData() {
         withContext(Dispatchers.IO) {

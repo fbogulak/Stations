@@ -1,6 +1,5 @@
 package com.example.stations.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,7 +12,10 @@ interface StationDao {
     fun insert(stations: List<DatabaseStation>)
 
     @Query("SELECT * FROM stations ORDER BY hits DESC")
-    fun getStations(): LiveData<List<DatabaseStation>>
+    fun getStations(): List<DatabaseStation>
+
+    @Query("SELECT * FROM stations INNER JOIN station_keywords ON stations.id = stationId WHERE keyword LIKE :expression ORDER BY hits DESC")
+    fun getFilteredStations(expression: String): List<DatabaseStation>
 
     @Query("DELETE FROM stations")
     fun deleteAllStations()

@@ -7,6 +7,6 @@
 
     <fragment
         android:id="@+id/distanceFragment"
-        android:name="com.example.stations.distance.DistanceFragment"
+        android:name="com.example.stations.ui.distance.DistanceFragment"
         tools:layout="@layout/fragment_distance"/>
 </navigation>
