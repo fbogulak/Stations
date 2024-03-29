@@ -250,7 +250,18 @@ class DistanceFragment : BaseFragment() {
     private fun setupStationsData() {
         val lastRefreshTime = viewModel.lastRefreshTime?.toLocalDateTime()
         if (lastRefreshTime == null) {
-            showSnackBar(R.string.connection_required)
+            if (hasNetworkConnection()) {
+                viewModel.refreshData()
+            } else {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(R.string.no_internet_title)
+                    .setIcon(R.drawable.ic_cloud_off)
+                    .setMessage(R.string.no_internet_msg)
+                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            }
         } else if (
             Duration.between(lastRefreshTime, LocalDateTime.now()).toHours() >= 24
         ) {

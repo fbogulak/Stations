@@ -17,4 +17,6 @@
     <string name="distance_label">Odległość pomiędzy podanymi stacjami wynosi:</string>
     <string name="distance_format">%.1f km</string>
     <string name="select_station">Proszę wybrać stację</string>
+    <string name="no_internet_title">Brak internetu</string>
+    <string name="no_internet_msg">Aby korzystać z aplikacji konieczne jest połaczenie z siecią i pobranie listy stacji.</string>
 </resources>
