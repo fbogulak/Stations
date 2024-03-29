@@ -203,7 +203,9 @@ class DistanceFragment : BaseFragment() {
         }
         if (viewModel.toStation.value == null || viewModel.fromStation.value == null)
             return validationPassed
-        if (viewModel.fromStation.value?.latitude == null || viewModel.fromStation.value?.longitude == null) {
+        if (viewModel.fromStation.value?.latitude == null || viewModel.fromStation.value?.longitude == null ||
+            viewModel.fromStation.value?.latitude == 0.0 || viewModel.fromStation.value?.longitude == 0.0
+        ) {
             MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.from_station_error)
                 .setPositiveButton(R.string.ok) { dialog, _ ->
@@ -212,7 +214,9 @@ class DistanceFragment : BaseFragment() {
                 .show()
             validationPassed = false
         }
-        if (viewModel.toStation.value?.latitude == null || viewModel.toStation.value?.longitude == null) {
+        if (viewModel.toStation.value?.latitude == null || viewModel.toStation.value?.longitude == null ||
+            viewModel.toStation.value?.latitude == 0.0 || viewModel.toStation.value?.longitude == 0.0
+        ) {
             MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.to_station_error)
                 .setPositiveButton(R.string.ok) { dialog, _ ->
