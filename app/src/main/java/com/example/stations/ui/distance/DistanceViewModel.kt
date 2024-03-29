@@ -19,10 +19,11 @@ class DistanceViewModel(private val repository: BaseRepository) : BaseViewModel(
     val stations: List<Station>
         get() = _stations
 
-    val lastRefreshTime = repository.getLastRefreshTime()
     val fromStation = MutableLiveData<Station>()
     val toStation = MutableLiveData<Station>()
     val distance = MutableLiveData<Double>()
+
+    fun getLastRefreshTime() = repository.getLastRefreshTime()
 
     suspend fun getStations(query: String?) {
         _stations = repository.getStations(query)

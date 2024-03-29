@@ -20,4 +20,7 @@
     <string name="how_it_works">Jak to działa</string>
     <string name="info_msg">Aplikacja oblicza odległość między stacjami najkrótszą drogą po powierzchni Ziemi, przy założeniu że Ziemia jest kulą.\nNie oblicza więc ona odległości wzdłuż linii kolejowych, a \"w linii prostej\".\n\nDla niektórych stacji współrzędne geograficzne nie są znane - nie ma możliwości obliczenia odległości z/do takiej stacji.</string>
     <string name="stations_loading">Pobieranie listy stacji…</string>
+    <string name="cancel">Anuluj</string>
+    <string name="turn_on_mobile_data">Włącz dane komórkowe</string>
+    <string name="turn_on_wifi">Włącz Wi-Fi</string>
 </resources>

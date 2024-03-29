@@ -1,6 +1,8 @@
 package com.example.stations.ui.distance
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.Menu
@@ -78,7 +80,10 @@ class DistanceFragment : BaseFragment() {
         setupMenu()
         setupSnackBar()
         setupEditTexts()
+    }
 
+    override fun onStart() {
+        super.onStart()
         setupStationsData()
     }
 
@@ -288,7 +293,7 @@ class DistanceFragment : BaseFragment() {
     }
 
     private fun setupStationsData() {
-        val lastRefreshTime = viewModel.lastRefreshTime?.toLocalDateTime()
+        val lastRefreshTime = viewModel.getLastRefreshTime()?.toLocalDateTime()
         if (lastRefreshTime == null) {
             if (hasNetworkConnection()) {
                 viewModel.refreshData()
@@ -297,7 +302,13 @@ class DistanceFragment : BaseFragment() {
                     .setTitle(R.string.no_internet_title)
                     .setIcon(R.drawable.ic_cloud_off)
                     .setMessage(R.string.no_internet_msg)
-                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                    .setPositiveButton(R.string.turn_on_wifi) { _, _ ->
+                        startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                    }
+                    .setNegativeButton(R.string.turn_on_mobile_data) { _, _ ->
+                        startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS))
+                    }
+                    .setNeutralButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()
@@ -311,7 +322,6 @@ class DistanceFragment : BaseFragment() {
                 showSnackBar(R.string.time_to_refresh_please_connect)
             }
         }
-        if (viewModel.distance.value != null) binding.distanceGroup.visibility = View.VISIBLE
     }
 
     private fun SearchView.close() {
