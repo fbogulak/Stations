@@ -8,6 +8,7 @@ import com.example.stations.database.StationsDatabase
 import com.example.stations.repository.BaseRepository
 import com.example.stations.repository.StationsRepository
 import com.example.stations.ui.distance.DistanceViewModel
+import com.google.android.material.color.DynamicColors
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -17,6 +18,8 @@ import org.koin.dsl.module
 class StationsApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        DynamicColors.applyToActivitiesIfAvailable(this)
+
         val appModule = module {
             single { StationsDatabase.getInstance(this@StationsApp) }
             single { provideSharedPref(androidApplication()) }
