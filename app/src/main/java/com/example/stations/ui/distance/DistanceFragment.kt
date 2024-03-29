@@ -241,6 +241,18 @@ class DistanceFragment : BaseFragment() {
                         }
                         return true
                     }
+
+                    R.id.action_info -> {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(R.string.how_it_works)
+                            .setIcon(R.drawable.ic_info)
+                            .setMessage(R.string.info_msg)
+                            .setPositiveButton(R.string.ok) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                        return true
+                    }
                 }
                 return false
             }
