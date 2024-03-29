@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Stations</string>
+    <string name="app_name">Stacje</string>
     <string name="error">Wystąpił błąd</string>
     <string name="error_loading_data">Podczas pobierania danych wystąpił błąd</string>
     <string name="uncommon_error">Wystąpił nietypowy błąd</string>
