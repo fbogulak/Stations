@@ -10,4 +10,11 @@
     <string name="connection_required">Aby pobrać listę stacji konieczne jest połączenie z internbetem.</string>
     <string name="from_station_hint">Stacja początkowa</string>
     <string name="to_station_hint">Stacja końcowa</string>
+    <string name="calculate_distance">Oblicz odległość</string>
+    <string name="from_station_error">Współrzędne stacji początkowej niestety nie są znane. Nie możemy obliczyć odległości.</string>
+    <string name="to_station_error">Współrzędne stacji końcowej niestety nie są znane. Nie możemy obliczyć odległości.</string>
+    <string name="ok">OK</string>
+    <string name="distance_label">Odległość pomiędzy podanymi stacjami wynosi:</string>
+    <string name="distance_format">%.1f km</string>
+    <string name="select_station">Proszę wybrać stację</string>
 </resources>

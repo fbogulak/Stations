@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ import com.example.stations.ui.base.BaseFragment
 import com.example.stations.ui.distance.adapters.StationsListAdapter
 import com.example.stations.utils.LoadingStatus
 import com.example.stations.utils.toLocalDateTime
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.search.SearchView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -99,25 +101,25 @@ class DistanceFragment : BaseFragment() {
         viewModel.status.observe(viewLifecycleOwner) {
             when (it) {
                 LoadingStatus.NO_INTERNET -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
                     showSnackBar(R.string.error_offline)
                 }
 
                 LoadingStatus.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
+                    binding.progressBar.show()
                 }
 
                 LoadingStatus.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
                     handleError()
                 }
 
                 LoadingStatus.SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
                 }
 
                 else -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.progressBar.hide()
                     showToast(R.string.uncommon_error)
                 }
             }
@@ -149,6 +151,18 @@ class DistanceFragment : BaseFragment() {
         binding.toSearchView.editText.doAfterTextChanged {
             searchStations(binding.toRecycler, it)
         }
+        binding.fromSearchBar.textView.doOnTextChanged { _, _, _, _ ->
+            binding.fromErrorText.visibility = View.GONE
+        }
+        binding.toSearchBar.textView.doOnTextChanged { _, _, _, _ ->
+            binding.toErrorText.visibility = View.GONE
+        }
+        binding.calculateButton.setOnClickListener {
+            if (validateStations()) {
+                viewModel.calculateDistance()
+                binding.distanceGroup.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun searchStations(recycler: RecyclerView, s: Editable?) {
@@ -171,6 +185,43 @@ class DistanceFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun validateStations(): Boolean {
+        var validationPassed = true
+        if (viewModel.fromStation.value == null) {
+            binding.fromErrorText.visibility = View.VISIBLE
+            validationPassed = false
+        } else {
+            binding.fromErrorText.visibility = View.GONE
+        }
+        if (viewModel.toStation.value == null) {
+            binding.toErrorText.visibility = View.VISIBLE
+            validationPassed = false
+        } else {
+            binding.toErrorText.visibility = View.GONE
+        }
+        if (viewModel.toStation.value == null || viewModel.fromStation.value == null)
+            return validationPassed
+        if (viewModel.fromStation.value?.latitude == null || viewModel.fromStation.value?.longitude == null) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setMessage(R.string.from_station_error)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+            validationPassed = false
+        }
+        if (viewModel.toStation.value?.latitude == null || viewModel.toStation.value?.longitude == null) {
+            MaterialAlertDialogBuilder(requireContext())
+                .setMessage(R.string.to_station_error)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+            validationPassed = false
+        }
+        return validationPassed
     }
 
     private fun setupMenu() {
@@ -209,6 +260,7 @@ class DistanceFragment : BaseFragment() {
                 showSnackBar(R.string.time_to_refresh_please_connect)
             }
         }
+        if (viewModel.distance.value != null) binding.distanceGroup.visibility = View.VISIBLE
     }
 
     private fun SearchView.close() {
