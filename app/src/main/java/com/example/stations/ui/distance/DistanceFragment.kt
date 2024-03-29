@@ -77,6 +77,7 @@ class DistanceFragment : BaseFragment() {
         setupListeners()
         setupMenu()
         setupSnackBar()
+        setupEditTexts()
 
         setupStationsData()
     }
@@ -277,6 +278,11 @@ class DistanceFragment : BaseFragment() {
             getString(R.string.stations_loading),
             Snackbar.LENGTH_INDEFINITE
         )
+    }
+
+    private fun setupEditTexts() {
+        binding.fromSearchView.editText.setSelectAllOnFocus(true)
+        binding.toSearchView.editText.setSelectAllOnFocus(true)
     }
 
     private fun setupStationsData() {
