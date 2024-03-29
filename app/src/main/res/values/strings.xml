@@ -19,4 +19,5 @@
     <string name="no_internet_msg">Aby korzystać z aplikacji konieczne jest połaczenie z siecią i pobranie listy stacji.</string>
     <string name="how_it_works">Jak to działa</string>
     <string name="info_msg">Aplikacja oblicza odległość między stacjami najkrótszą drogą po powierzchni Ziemi, przy założeniu że Ziemia jest kulą.\nNie oblicza więc ona odległości wzdłuż linii kolejowych, a \"w linii prostej\".\n\nDla niektórych stacji współrzędne geograficzne nie są znane - nie ma możliwości obliczenia odległości z/do takiej stacji.</string>
+    <string name="stations_loading">Pobieranie listy stacji…</string>
 </resources>

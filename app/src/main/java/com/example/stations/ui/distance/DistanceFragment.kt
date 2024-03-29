@@ -25,6 +25,7 @@ import com.example.stations.utils.LoadingStatus
 import com.example.stations.utils.toLocalDateTime
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.search.SearchView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -51,6 +52,7 @@ class DistanceFragment : BaseFragment() {
         }
     }
     private var timer = Timer()
+    private lateinit var snackbar: Snackbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +76,7 @@ class DistanceFragment : BaseFragment() {
         setupObservers()
         setupListeners()
         setupMenu()
+        setupSnackBar()
 
         setupStationsData()
     }
@@ -102,24 +105,29 @@ class DistanceFragment : BaseFragment() {
             when (it) {
                 LoadingStatus.NO_INTERNET -> {
                     binding.progressBar.hide()
+                    snackbar.dismiss()
                     showSnackBar(R.string.error_offline)
                 }
 
                 LoadingStatus.LOADING -> {
                     binding.progressBar.show()
+                    snackbar.show()
                 }
 
                 LoadingStatus.ERROR -> {
                     binding.progressBar.hide()
+                    snackbar.dismiss()
                     handleError()
                 }
 
                 LoadingStatus.SUCCESS -> {
                     binding.progressBar.hide()
+                    snackbar.dismiss()
                 }
 
                 else -> {
                     binding.progressBar.hide()
+                    snackbar.dismiss()
                     showToast(R.string.uncommon_error)
                 }
             }
@@ -261,6 +269,14 @@ class DistanceFragment : BaseFragment() {
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun setupSnackBar() {
+        snackbar = Snackbar.make(
+            this.requireView(),
+            getString(R.string.stations_loading),
+            Snackbar.LENGTH_INDEFINITE
+        )
     }
 
     private fun setupStationsData() {
