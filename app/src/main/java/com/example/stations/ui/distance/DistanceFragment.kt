@@ -87,6 +87,7 @@ class DistanceFragment : BaseFragment() {
             adapter = StationsListAdapter(
                 StationsListAdapter.StationListener {
                     viewModel.fromStation.value = it
+                    binding.distanceGroup.visibility = View.GONE
                     binding.fromSearchView.close()
                 }
             )
@@ -95,6 +96,7 @@ class DistanceFragment : BaseFragment() {
             adapter = StationsListAdapter(
                 StationsListAdapter.StationListener {
                     viewModel.toStation.value = it
+                    binding.distanceGroup.visibility = View.GONE
                     binding.toSearchView.close()
                 }
             )
