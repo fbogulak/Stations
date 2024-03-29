@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">Stations</string>
-    <string name="distance_fragment_label">First Fragment</string>
     <string name="error">Wystąpił błąd</string>
     <string name="error_loading_data">Podczas pobierania danych wystąpił błąd</string>
     <string name="uncommon_error">Wystąpił nietypowy błąd</string>
     <string name="error_offline">Brak połączenia z Internetem</string>
     <string name="refresh_stations">Odśwież stacje</string>
     <string name="time_to_refresh_please_connect">Lista stacji może być nieaktualna. Aby odświeżyć należy połączyć się z internetem.</string>
-    <string name="connection_required">Aby pobrać listę stacji konieczne jest połączenie z internbetem.</string>
     <string name="from_station_hint">Stacja początkowa</string>
     <string name="to_station_hint">Stacja końcowa</string>
     <string name="calculate_distance">Oblicz odległość</string>
